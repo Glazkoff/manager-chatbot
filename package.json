@@ -1,0 +1,25 @@
+{
+  "name": "manager-chatbot",
+  "version": "1.0.0",
+  "description": "chatbot for polyweb.agency",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Glazkoff/manager-chatbot.git"
+  },
+  "author": "jeuub, Isas2g",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Glazkoff/manager-chatbot/issues"
+  },
+  "homepage": "https://github.com/Glazkoff/manager-chatbot#readme",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.51.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
