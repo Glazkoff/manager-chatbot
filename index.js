@@ -105,7 +105,6 @@ bot.on('message', msg => {
           'time': time,
           'day': day
         });
-        bot.sendMessage(chatid, `Дейли: ${week[day]} ${match1}`);
         bot.sendMessage(msg.chat.id, `Отлично! Я обязательно напомню в ${week[day]} ${match1}, если не сдохну :)`);
         count[day] = 0;
       }
@@ -133,7 +132,6 @@ bot.on('message', msg => {
           'time': time,
           'day': day
         });
-        bot.sendMessage(chatid, `Дейли: ${week[day]} ${match2}`);
         bot.sendMessage(msg.chat.id, `Отлично! Я обязательно напомню в ${week[day]} ${match2}, если не сдохну :)`);
         count[day]=0;
       }
@@ -161,7 +159,6 @@ bot.on('message', msg => {
           'time': time,
           'day': day
         });
-        bot.sendMessage(chatid, `Дейли: ${week[day]} ${match3}`);
         bot.sendMessage(msg.chat.id, `Отлично! Я обязательно напомню в ${week[day]} ${match3}, если не сдохну :)`);
         count[day] = 0;
       }
@@ -188,7 +185,6 @@ bot.on('message', msg => {
           'day': day
         });
         console.log(chatid);
-        bot.sendMessage(chatid, `Дейли: ${week[day]} ${match4}`);
         bot.sendMessage(msg.chat.id, `Отлично! Я обязательно напомню в ${week[day]} ${match4}, если не сдохну :)`);
         count[day] = 0;
       }
@@ -216,7 +212,6 @@ bot.on('message', msg => {
           'time': time,
           'day': day
         });
-        bot.sendMessage(chatid, `Дейли: ${week[day]} ${match5}`);
         bot.sendMessage(msg.chat.id, `Отлично! Я обязательно напомню в ${week[day]} ${match5}, если не сдохну :)`);
         count[day] = 0;
       }
@@ -242,7 +237,6 @@ bot.on('message', msg => {
           'time': time,
           'day': day
         });
-        bot.sendMessage(chatid, `Дейли: ${week[day]} ${match6}`);
         bot.sendMessage(msg.chat.id, `Отлично! Я обязательно напомню в ${week[day]} ${match6}, если не сдохну :)`);
       }
     });
@@ -267,7 +261,6 @@ bot.on('message', msg => {
         'time': time,
         'day': day
       });
-      bot.sendMessage(chatid, `Дейли: ${week[day]} ${match7}`);
       bot.sendMessage(msg.chat.id, `Отлично! Я обязательно напомню в ${week[day]} ${match7}, если не сдохну :)`);
       }
     });
@@ -286,7 +279,7 @@ setInterval(function () {
 *дейли начинается*`, {
         parse_mode: 'Markdown'
       });
-      bot.sendSticker(notes[i],['uid'],'CAACAgIAAxkBAAIDFWAlGqvp8xWUkL2G4yeFTC0rHHgdAAIEAAPVhWMYCsDZsXKfqX8eBA');
+      bot.sendSticker(notes[i]['uid'],'CAACAgIAAxkBAAIDFWAlGqvp8xWUkL2G4yeFTC0rHHgdAAIEAAPVhWMYCsDZsXKfqX8eBA');
 
       notes.splice(i, 1);
     }
