@@ -85,18 +85,47 @@ bot.onText(/\/notify (.+)/, (msg, [source, match]) => {
     });
   }
 });
+let day;
+bot.on('message', msg =>{
+  switch (msg.text) {
+    case '/пн':
+      day = 1;
+    break;  
+    
+    case '/вт':
+      day = 2;
+    break;
 
-/* понедельник */
-bot.on('message', msg => {
-  if (msg.text === '/пн') {
-    let day = 1;
+    case '/ср':
+      day = 3;
+    break;
+    
+    case '/чт':
+      day = 4;
+    break;
+
+    case '/пт':
+      day = 5;
+    break;
+
+    case '/сб':
+      day = 6;
+    break;
+
+    case '/вс':
+      day = 7;
+    break;
+  }
+
+  if ((msg.text === '/пн')||(msg.text === '/вт')||(msg.text === '/ср')||(msg.text === '/чт')||(msg.text === '/пт')||(msg.text === '/сб')||(msg.text === '/вс')) {
     count[day]=1;
     bot.sendMessage(msg.chat.id, 'Выберите время:', {
       reply_markup: {
         remove_keyboard: true
       }
     });
-    
+  
+
     bot.onText(/время (.+)/, function (msg, [source1, match1]) {
       if(count[day] == 1){
         var time = day + ', ' + match1; 
@@ -107,161 +136,6 @@ bot.on('message', msg => {
         });
         bot.sendMessage(msg.chat.id, `Отлично! Я обязательно напомню в ${week[day]} ${match1}, если не сдохну :)`);
         count[day] = 0;
-      }
-    });
-  }
-});
-
-
-
-/* вторник */
-bot.on('message', msg => {
-  if (msg.text === '/вт') {
-    let day = 2;
-    count[day] = 1;
-    bot.sendMessage(msg.chat.id, 'Выберите время:', {
-      reply_markup: {
-        remove_keyboard: true
-      }
-    });
-    bot.onText(/время (.+)/, function (msg, [source1, match2]) {
-      if(count[day] == 1){
-        var time = day + ', ' + match2;
-        notes.push({
-          'uid': chatid,
-          'time': time,
-          'day': day
-        });
-        bot.sendMessage(msg.chat.id, `Отлично! Я обязательно напомню в ${week[day]} ${match2}, если не сдохну :)`);
-        count[day]=0;
-      }
-    });
-  }
-});
-
-
-
-/* среда */
-bot.on('message', msg => {
-  if (msg.text === '/ср') {
-    let day = 3;
-    count[day] = 1;
-    bot.sendMessage(msg.chat.id, 'Выберите время:', {
-      reply_markup: {
-        remove_keyboard: true
-      }
-    });
-    bot.onText(/время (.+)/, function (msg, [source1, match3]) {
-      if(count[day] == 1){
-        var time = day + ', ' + match3;
-        notes.push({
-          'uid': chatid,
-          'time': time,
-          'day': day
-        });
-        bot.sendMessage(msg.chat.id, `Отлично! Я обязательно напомню в ${week[day]} ${match3}, если не сдохну :)`);
-        count[day] = 0;
-      }
-    });
-  }
-});
-
-/* четверг */
-bot.on('message', msg => {
-  if (msg.text === '/чт') {
-    let day = 4;
-    count[day] = 1;
-    bot.sendMessage(msg.chat.id, 'Выберите время:', {
-      reply_markup: {
-        remove_keyboard: true
-      }
-    });
-    bot.onText(/время (.+)/, function (msg, [source1, match4]) {
-        if(count[day] == 1){
-        var time = day + ', ' + match4;
-        notes.push({
-          'uid': chatid,
-          'time': time,
-          'day': day
-        });
-        console.log(chatid);
-        bot.sendMessage(msg.chat.id, `Отлично! Я обязательно напомню в ${week[day]} ${match4}, если не сдохну :)`);
-        count[day] = 0;
-      }
-    });
-  }
-});
-
-
-
-/* пятница */
-bot.on('message', msg => {
-  if (msg.text === '/пт') {
-    let day = 5;
-    count[day] = 1;
-    bot.sendMessage(msg.chat.id, 'Выберите время:', {
-      reply_markup: {
-        remove_keyboard: true
-      }
-    });
-    bot.onText(/время (.+)/, function (msg, [source1, match5]) {
-      if(count[day] == 1){
-        var time = day + ', ' + match5;
-        notes.push({
-          'uid': chatid,
-          'time': time,
-          'day': day
-        });
-        bot.sendMessage(msg.chat.id, `Отлично! Я обязательно напомню в ${week[day]} ${match5}, если не сдохну :)`);
-        count[day] = 0;
-      }
-    });
-  }
-});
-
-/* суббота */
-bot.on('message', msg => {
-  if (msg.text === '/сб') {
-    let day = 6;
-    count[day] = 1;
-    bot.sendMessage(msg.chat.id, 'Выберите время:', {
-      reply_markup: {
-        remove_keyboard: true
-      }
-    });
-    bot.onText(/время (.+)/, function (msg, [source1, match6]) {
-      if(count[day] == 1){
-        var time = day + ', ' + match6;
-        notes.push({
-          'uid': chatid,
-          'time': time,
-          'day': day
-        });
-        bot.sendMessage(msg.chat.id, `Отлично! Я обязательно напомню в ${week[day]} ${match6}, если не сдохну :)`);
-      }
-    });
-  }
-});
-
-/* воскресенье */
-bot.on('message', msg => {
-  if (msg.text === '/вс') {
-    let day = 0;
-    count[day] = 1;
-    bot.sendMessage(msg.chat.id, 'Выберите время:', {
-      reply_markup: {
-        remove_keyboard: true
-      }
-    });
-    bot.onText(/время (.+)/, function (msg, [source1, match7]) {
-      if(count[day]){
-      var time = day + ', ' + match7;
-      notes.push({
-        'uid': chatid,
-        'time': time,
-        'day': day
-      });
-      bot.sendMessage(msg.chat.id, `Отлично! Я обязательно напомню в ${week[day]} ${match7}, если не сдохну :)`);
       }
     });
   }
