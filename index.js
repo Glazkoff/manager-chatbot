@@ -1,7 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api');
 /* подключение токена*/
 const token = require('./token.js');
-token() !== "" ? console.log("\x1b[35m", 'Token was successfully received!') : console.log("\x1b[31m", 'Token was not received');
+token() !== "" ? console.log( "\x1b[35m", 'Token was successfully received!', "\x1b[35m") : console.log("\x1b[31m", 'Token was not received');
 
 const bot = new TelegramBot(token(), {
   polling: true
@@ -117,9 +117,9 @@ bot.on('message', msg =>{
     break;
   }
 
-  if ((msg.text === '/пн')||(msg.text === '/вт')||(msg.text === '/ср')||(msg.text === '/чт')||(msg.text === '/пт')||(msg.text === '/сб')||(msg.text === '/вс')) {
+  if (((msg.text === '/пн')||(msg.text === '/вт')||(msg.text === '/ср')||(msg.text === '/чт')||(msg.text === '/пт')||(msg.text === '/сб')||(msg.text === '/вс'))&&(chatid!='')) {
     count[day]=1;
-    bot.sendMessage(msg.chat.id, 'Выберите время:', {
+    bot.sendMessage(msg.chat.id, 'Выберите время. пример записи "/время 21:34"', {
       reply_markup: {
         remove_keyboard: true
       }
@@ -128,21 +128,47 @@ bot.on('message', msg =>{
 
     bot.onText(/время (.+)/, function (msg, [source1, match1]) {
       if(count[day] == 1){
-        var time = day + ', ' + match1; 
-        notes.push({
-          'uid': chatid,
-          'time': time,
-          'day': day
-        });
-        bot.sendMessage(msg.chat.id, `Отлично! Я обязательно напомню в ${week[day]} ${match1}, если не сдохну :)`);
-        count[day] = 0;
+        
+        let t = match1.split('').slice(-2);
+        if(t[1] == '0'){
+          match1 = match1.split('').slice(-2,1).join('');
+          console.log(match1);
+        }   
+        
+        var time = day + ', ' + match1;
+        console.log(time);
+        if((chatid != undefined)&&(time != '')&&(day != 0)){
+
+          notes.push({
+            'uid': chatid,
+            'time': time,
+            'day': day,
+          });
+          bot.sendMessage(msg.chat.id, `Отлично! Я обязательно напомню в ${week[day]} ${match1}, если не сдохну :)`);
+          count[day] = 0;
+
+        } else bot.sendMessage(msg.chat.id, 'Ошибка! Напишите /help для того, чтобы узнать правильный порядок ввода команд');
+        
       }
     });
-  }
+  } 
 });
 
 setInterval(function () {
   for (var i = 0; i < notes.length; i++) {
+    const curDate2 = new Date().getDay() + ', ' + (new Date().getHours()+2) + ':' + new Date().getMinutes();
+    if (notes[i]['time'] == curDate2) {
+      
+      bot.sendMessage(notes[i]['uid'] , `Напоминание: 
+*день недели*: _${week[notes[i]['day']]}_
+*время*: _${new Date().getHours() + ':' + new Date().getMinutes()}_
+*дейли начнется через два часа*`, {
+        parse_mode: 'Markdown'
+      });
+    }
+
+
+
     const curDate = new Date().getDay() + ', ' + new Date().getHours() + ':' + new Date().getMinutes();
     console.log(notes);
     if (notes[i]['time'] == curDate) {
@@ -154,8 +180,10 @@ setInterval(function () {
         parse_mode: 'Markdown'
       });
       bot.sendSticker(notes[i]['uid'],'CAACAgIAAxkBAAIDFWAlGqvp8xWUkL2G4yeFTC0rHHgdAAIEAAPVhWMYCsDZsXKfqX8eBA');
-
-      notes.splice(i, 1);
     }
   }
-}, 1000);
+}, 60000);
+
+
+
+
