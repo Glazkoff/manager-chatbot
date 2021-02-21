@@ -115,6 +115,9 @@ bot.on('message', msg =>{
     case '/вс':
       day = 7;
     break;
+
+    default: day = -1;
+    break;
   }
 
   if (((msg.text === '/пн')||(msg.text === '/вт')||(msg.text === '/ср')||(msg.text === '/чт')||(msg.text === '/пт')||(msg.text === '/сб')||(msg.text === '/вс'))&&(chatid!='')) {
@@ -137,7 +140,7 @@ bot.on('message', msg =>{
         
         var time = day + ', ' + match1;
         console.log(time);
-        if((chatid != undefined)&&(time != '')&&(day != 0)){
+        if((chatid != undefined)&&(time != '')&&(day != -1)){
 
           notes.push({
             'uid': chatid,
@@ -183,7 +186,3 @@ setInterval(function () {
     }
   }
 }, 60000);
-
-
-
-
