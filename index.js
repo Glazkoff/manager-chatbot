@@ -175,6 +175,9 @@ bot.on('message', msg =>{
       day = 0;
       weekDay = 'sunday';
     break;
+
+    default: day = -1;
+    break;
   }
 
   if (((msg.text === '/пн')||(msg.text === '/вт')||(msg.text === '/ср')||(msg.text === '/чт')||(msg.text === '/пт')||(msg.text === '/сб')||(msg.text === '/вс'))&&(chatid!='')) {
